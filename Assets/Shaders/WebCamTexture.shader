@@ -1,11 +1,18 @@
-﻿Shader "Custom/PostEffect"
+﻿Shader "Unlit/WebCamTexture"
 {
     Properties
     {
-        _MainTex ("Texture", 2D) = "white" {}
+        [HideInInspector] _MainTex("Main Texture", 2D) = "white" {}
+		//[HideInInspectoe] _WebCamTexture("Web Cam Texture", 2D) = "white" {}
+		[HideInInspector] _Color("Color", Color) = (1, 1, 1, 1)
     }
     SubShader
     {
+        Tags 
+		{ 
+			"RenderType"="Opaque" 
+		}
+
         Pass
         {
             CGPROGRAM
@@ -23,8 +30,12 @@
             struct v2f
             {
                 float2 uv : TEXCOORD0;
+                UNITY_FOG_COORDS(1)
                 float4 vertex : SV_POSITION;
             };
+
+			sampler2D _MainTex;
+			fixed4 _Color;
 
             v2f vert (appdata v)
             {
@@ -34,16 +45,11 @@
                 return o;
             }
 
-            sampler2D _MainTex;
-
-            fixed4 frag(v2f i) : SV_Target
+            fixed4 frag (v2f i) : SV_Target
             {
-                i.uv -= fixed2(0.5, 0.5);
-                i.uv.x *= 16.0 / 9.0;
-                if (distance(i.uv, fixed2(0, 0)) < 0.1) {
-                    discard;
-                }
-                return fixed4(0.0,0.0,0.0,1.0);
+                fixed4 col = tex2D(_MainTex, i.uv);
+				col *= step(col.r, 0.99);
+				return col;
             }
             ENDCG
         }
