@@ -1,6 +1,8 @@
 # Meet
 
 ## セットアップ
+[Spout2](https://github.com/leadedge/Spout2)
+[KlakSpout](https://github.com/keijiro/KlakSpout)
 <p>
   <a 
      href="https://github.com/s-tama/Meet/wiki/SetupFiles/OBS_Spout2_Plugin_Install_v0.4_mainline.25.0.8.exe" 
