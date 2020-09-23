@@ -49,6 +49,8 @@
             {
                 fixed4 col = tex2D(_MainTex, i.uv);
 				col *= step(col.r, 0.99);
+				col *= step(col.g, 0.99);
+				col *= step(col.b, 0.99);
 				return col;
             }
             ENDCG
